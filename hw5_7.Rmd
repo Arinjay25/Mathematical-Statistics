@@ -1,0 +1,15 @@
+---
+title: "Homework#5 7b"
+author: "Arinjay Jain"
+date: "March 9, 2021"
+output: html_document
+---
+
+```{r}
+library(LaplacesDemon)
+x <- rlaplace(100, 0, 1)
+hist(x, 100, freq = FALSE)
+curve(dlaplace(x, 0, 1), -100, 100, n = 100, col = "red", add = TRUE)
+```
+
+### we can see the flat peak from -1 to +1

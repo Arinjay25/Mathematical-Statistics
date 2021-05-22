@@ -1,0 +1,39 @@
+---
+title: "Homework 5"
+author: "Arinjay Jain"
+date: "March 5, 2021"
+output: html_document
+---
+
+
+```{r}
+
+##-------------------------------------------------------
+## R code for the Monte Carlo simulations in HW5 math 563
+##-------------------------------------------------------
+## GOAL: To estimate pi = 3.14159..., the area of the unit circle.
+## Strategy 1
+pi.est1 <- function(n, reps) {
+pi.hat <- numeric(reps)
+for(i in 1:reps) pi.hat[i] <- 4 * mean((runif(n)**2 + runif(n)**2) < 1)
+return(pi.hat)
+}
+# TO RUN:
+out1 <- pi.est1(n=10000, reps=1000)
+print(c(mean(out1), var(out1)))
+
+```
+```{r}
+# Strategy 2
+pi.est2 <- function(n, reps) {
+pi.hat <- numeric(reps)
+for(i in 1:reps) pi.hat[i] <- 4 * mean(sqrt(1 - runif(n)**2))
+return(pi.hat)
+}
+# TO RUN:
+myOutput <- pi.est2(n=10000, reps=1000)
+print(c(mean(myOutput), var(myOutput)))
+
+```
+### We can see we have smaller variance in 2nd Strategy so π2 (Pi-2) is the best estimators in this case. If you have a choice between two ways to estimate some quantity, choose the method that has the smaller variance. For Monte Carlo estimation, a smaller variance means that you can use fewer Monte Carlo iterations to estimate the quantity.
+### why the two estimators do estimate π. Both estimators provide a reasonable approximation of pi, but estimate from the 2nd Strategy method is better. More importantly, the standard error for the 2nd Strategy method is lesser then the 1st Strategy.

@@ -1,0 +1,68 @@
+---
+title: "EM_Algorithm"
+author: "Arinjay Jain"
+date: "May 7, 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 6.6.4
+
+#### Intital theta
+
+##### Part A
+```{r, include=T}
+X <- rep(0,4)
+X[1] = 125
+X[2] = 18
+X[3] = 20
+X[4] = 34
+
+n = sum(X)
+# theta_0 = (x1-x2-x3+x4)/n
+theta_0 = (X[1] - X[2] -X[3] +X[4])/n
+
+cat("Initial estimate:", theta_0)
+```
+
+##### Part B
+```{r}
+theta <- rep(0,5)
+
+theta[1] <- theta_0
+
+for (i in 1:4){
+  theta[i+1] = (X[1]*theta[i] + 2*X[4] + X[4]*theta[i])/
+    (n*theta[i] + 2*(X[2]+X[3]+X[4]))
+}
+
+theta
+
+cat("Here we can see sequence of estimates theta is getting converge")
+```
+
+##### Part C
+
+```{r}
+## MLE = (x1+x2+x3+x4)*theta^2 - (x1-2x2-2x3-x4)*theta - 2x4
+
+
+quad <- function(a, b, c)
+{
+  a <- as.complex(a)
+  answer <- c((-b + sqrt(b^2 - 4 * a * c)) / (2 * a),
+              (-b - sqrt(b^2 - 4 * a * c)) / (2 * a))
+  if(all(Im(answer) == 0)) answer <- Re(answer)
+  if(answer[1] == answer[2]) return(answer[1])
+  answer
+}
+
+
+root <- quad(a = 197, b= -15, c = -68)
+cat("Positive root:", root[1])
+
+cat(" \n We can see the positive root of this quadratic equation is same with roundoff error to MLE (theta)")
+```
